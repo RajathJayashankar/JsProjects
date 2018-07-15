@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coda+Caption:800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title></title>
+  </head>
+  <body>
+
+
+    <div class="keys">
+      <div data-key="90" class="key">
+        <kbd>Z</kbd>
+        <span class="sound">first</span>
+
+      </div>
+      <div data-key="88" class="key">
+          <kbd>X</kbd>
+          <span class="sound">second</span>
+      </div>
+      <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">third</span>
+
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">fourth</span>
+
+      </div>
+      <div data-key="84" class="key">
+        <kbd>T</kbd>
+        <span class="sound">fifth</span>
+
+      </div><div data-key="89" class="key">
+        <kbd>Y</kbd>
+        <span class="sound">sixth</span>
+    </div>
+  </div>
+
+  <audio data-key="90" src="sounds/first.wav"></audio>
+  <audio data-key="88" src="sounds/second.wav"></audio>
+  <audio data-key="68" src="sounds/third.wav"></audio>
+  <audio data-key="70" src="sounds/fourth.wav"></audio>
+  <audio data-key="84" src="sounds/fifth.wav"></audio>
+  <audio data-key="89" src="sounds/sixth.wav"></audio>
+
+  <script>
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+
+    if (!audio) {
+      return;
+    }
+
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+  }
+
+
+  function removeTransition(e) {
+   if (e.propertyName !== 'transform'){
+     return;
+   }
+
+   e.target.classList.remove('playing');
+ }
+
+
+
+ const keys = Array.from(document.querySelectorAll('.key'));
+
+ keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+ window.addEventListener('keydown', playSound);
+
+
+
+  </script>
+  </body>
+</html>
